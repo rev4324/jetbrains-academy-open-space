@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Space</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .space {
+            background: url("https://stepik.org/media/attachments/lesson/452681/space.png") repeat;
+            z-index: -10;
+        }
+        .rocket {
+            position: absolute;
+            left: 400px;
+            top: 40px;
+            transform: rotate(25deg);
+        }
+        .control-panel__inner {
+            display: flex;
+            flex-direction: column;
+            flex-basis: 500px;
+            justify-content: space-around;
+            align-items: center;
+            background: linear-gradient(#000, #111);
+            padding: 20px;
+        }
+        .control-panel {
+            position: absolute;
+            top: 200px;
+            right: 200px;
+            width: 30em;
+            background: linear-gradient(45deg, yellow, greenyellow);
+            padding: 10px;
+        }
+        .check-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 300px;
+            margin: 40px 0;
+        }
+        .check-buttons input {
+            width: 20px;
+            height: 20px;
+        }
+        .levers input {
+            -webkit-appearance: slider-vertical;
+            width: 10px
+        }
+        .levers {
+            display: flex;
+            flex-direction: row;
+            width: 300px;
+            justify-items: center;
+            justify-content: space-between;
+            margin: 50px 0;
+        }
+        #launch {
+            border: 10px solid red;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: yellow;
+            font-family: monospace;
+            font-size: 30px;
+        }
+        #pwd {
+            font-size: 30px;
+            background-color: #222;
+            color: white;
+            border: 5px dashed red;
+        }
+        #ok {
+            background-color: greenyellow;
+            color: black;
+            font-size: 2em;
+            font-family: monospace;
+            border: 3px solid green;
+        }
+    </style>
+    <script async>
+        function enableInputs() {
+            let checkButtons = document.querySelectorAll(".check-buttons input");
+            let levers = document.querySelectorAll(".levers input");
+            let pwdField = document.querySelector("#pwd");
+            let okField = document.querySelector("#ok")
+            if (pwdField.value === "TrustNo1") {
+                for (let i = 0; i < levers.length; i++)
+                    levers[i].disabled = false;
+                for (let i = 0; i < checkButtons.length; i++)
+                    checkButtons[i].disabled = false;
+                pwdField.disabled = true;
+                okField.disabled = true;
+            }
+        }
+        function enableLaunch() {
+            let checkButtons = document.querySelectorAll(".check-buttons input");
+            let levers = document.querySelectorAll(".levers input");
+            let launchButton = document.getElementById("launch");
+            if ((checkButtons[0].checked === true && checkButtons[1].checked === true && checkButtons[2].checked === true && checkButtons[3].checked === true && checkButtons[4].checked === true && checkButtons[5].checked === true) && (levers[0].value === '100' && levers[1].value === '100' && levers[2].value === '100' && levers[3].value === '100' && levers[4].value === '100')) {
+                    launchButton.disabled = false;
+                }
+        }
+
+        function goFromMissionControl() {
+            let theRocket = document.querySelector(".rocket");
+            theRocket.animate([
+                {
+                    position: "absolute",
+                    left: "400px",
+                    top: "40px"
+                },
+                {
+                    position: "absolute",
+                    left: "800px",
+                    top: "-500px"
+                }
+                ],
+                {
+                    duration: 2000,
+                    iterations: 1
+                }
+
+            )
+        }
+    </script>
+</head>
+<body>
+<div class="space">
+    <div class="planet-area">
+        <img src="https://stepik.org/media/attachments/lesson/452681/mars.png" alt="mars" class="planet">
+        <img src="https://stepik.org/media/attachments/lesson/452681/rocket.png" alt="rocket" class="rocket">
+    </div>
+    <div class="control-panel">
+        <div class="control-panel__inner">
+            <input type="password" id="pwd">
+            <input type="button" value="OK" id="ok" onclick="enableInputs()">
+            <div class="check-buttons">
+                <input type="checkbox" disabled onchange="enableLaunch()">
+                <input type="checkbox" disabled onchange="enableLaunch()">
+                <input type="checkbox" disabled onchange="enableLaunch()">
+                <input type="checkbox" disabled onchange="enableLaunch()">
+                <input type="checkbox" disabled onchange="enableLaunch()">
+                <input type="checkbox" disabled onchange="enableLaunch()">
+            </div>
+            <div class="levers">
+                <input type="range" orient="vertical" disabled onchange="enableLaunch()">
+                <input type="range" orient="vertical" disabled onchange="enableLaunch()">
+                <input type="range" orient="vertical" disabled onchange="enableLaunch()">
+                <input type="range" orient="vertical" disabled onchange="enableLaunch()">
+                <input type="range" orient="vertical" disabled onchange="enableLaunch()">
+            </div>
+            <input type="button" value="Launch" id="launch" disabled onclick="goFromMissionControl()">
+        </div>
+    </div>
+</div>
+</body>
+</html>
